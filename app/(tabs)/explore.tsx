@@ -106,11 +106,6 @@ const App = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
-                <Text style={styles.infoText}>Show Package Info</Text>
-            </TouchableOpacity>
-
             <Modal visible={isModalVisible} transparent={true} animationType="fade">
                 <View style={styles.modalContainer}>
                     <View style={styles.modalBox}>
