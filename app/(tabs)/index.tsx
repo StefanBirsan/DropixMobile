@@ -20,12 +20,14 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.LoginForm}>
+
             <View style={styles.Credentials}>
                 <TextInput placeholder="Username" style={styles.LabelField}/>
                 <TextInput placeholder="Password" secureTextEntry={true} style={styles.LabelField}/>
             </View>
 
-            <CustomButton1 text={"Log In"} onPress={() => console.log('clicked')} />
+            <CustomButton1 text={"Log In"} onPress={() => console.log('clicked')} style={{width:'50%',height:'15%',marginTop:'10%'}}/>
+
         </View>
     </View>
   );
@@ -69,7 +71,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '60%',
         alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: '5%',
+        justifyContent: 'space-evenly',
     },
     LabelField: {
         fontSize: 18,
