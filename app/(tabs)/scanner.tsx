@@ -1,33 +1,40 @@
-import { Alert, View } from "react-native";
-import { CameraView } from "expo-camera";
-import { useState } from "react";
-import {useNavigation} from "expo-router";
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useState, useEffect } from 'react';
+import {View, Button, Text, Alert} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Scanner = () => {
+export default function App() {
+    const [permission, requestPermission] = useCameraPermissions();
     const [scanned, setScanned] = useState(false);
     const navigation = useNavigation();
 
+    useEffect(() => {
+        if (!permission?.granted) {
+            requestPermission();
+        }
+    }, [permission]);
+
+    if (!permission?.granted) {
+        return (
+            Alert.alert("Permission Granted")
+        );
+    }
+
+    // @ts-ignore
     const handleBarcodeScanned = ({ data }) => {
         if (!scanned) {
-            // setScanned(true);
-            // Alert.alert("QR Code Scanned", data, [
-            //     { text: "OK", onPress: () => setScanned(false) }
-            // ]);
-            navigation.navigate("explore", {data});
+            // @ts-ignore
+            navigation.navigate('explore', {scannedData: data})
         }
     };
 
     return (
-        <View style={{ flex: 1 }}>
-            <CameraView
-                style={{ flex: 1 }}
-                onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
-                barcodeScannerSettings={{
-                    barcodeTypes: ["qr"]
-                }}
-            />
-        </View>
+        <CameraView
+            style={{ flex: 1 }}
+            onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+            barcodeScannerSettings={{
+                barcodeTypes: ["qr"]
+            }}
+        />
     );
-};
-
-export default Scanner;
+}

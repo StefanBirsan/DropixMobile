@@ -2,22 +2,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import MapView, {Region} from 'react-native-maps';
 import * as Location from 'expo-location';
-import {useLocalSearchParams} from "expo-router";
 import AWBModal from "@/scripts/AWBModal";
+import { useRoute } from "@react-navigation/native";
 
 type RootStackParamList = {
-    final: { awb: string; address: string; status: string; };
-};
-
-const carData: Record<string, { image: string ; description: string }> = {
-    "": {
-        image: "",
-        description: "Description",
-    },
-    "": {
-        image: "",
-        description: "Description",
-    },
+    final: { scannedData: string; };
 };
 
 type LocationType = {
@@ -28,10 +17,8 @@ type LocationType = {
 
 const App = () => {
 
-    const params = useLocalSearchParams();
-    const { maker = "", model = "", generation = "", engine = "" } = params;
-    const awbKey = `${maker}_${model}_${generation}_${engine}`;
-    const awbInfo = carData[awbKey];
+    const route = useRoute();
+    const { scannedData } = route.params as { scannedData: string };
 
     const mapRef = useRef<any>(null);
     const [location, setLocation] = useState<LocationType | null>(null);
@@ -106,16 +93,11 @@ const App = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
-                <Text style={styles.infoText}>Show Package Info</Text>
-            </TouchableOpacity>
-
             <Modal visible={isModalVisible} transparent={true} animationType="fade">
                 <View style={styles.modalContainer}>
                     <View style={styles.modalBox}>
                         <AWBModal
-                            awbInfo={awbInfo}
+                            awbInfo={scannedData}
                         />
                         <View style={styles.buttonsContainer}>
                             <TouchableOpacity style={styles.closeButton} onPress={onClose}>
@@ -154,7 +136,7 @@ const styles = StyleSheet.create({
     },
     mapContainer: {
         width: '100%',
-        height: '91%',
+        height: '100%',
     },
     buttonContainer: {
         marginBottom: 30,
