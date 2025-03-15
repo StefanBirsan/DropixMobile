@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import MapView, {Region} from 'react-native-maps';
 import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
-import { useRoute } from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import { getDatabase, ref, get} from "@firebase/database";
 
 
@@ -19,6 +19,8 @@ type LocationType = {
 };
 
 const App = () => {
+
+    const navigation = useNavigation();
 
     const route = useRoute();
     const { scannedData } = route.params as { scannedData: string };
@@ -122,6 +124,10 @@ const App = () => {
                     <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
                         <Text style={styles.infoText}>Show Package Info</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.showInfo} onPress={() => navigation.navigate('index')}>
+                        <Text style={styles.infoText}>Back to menu</Text>
+                    </TouchableOpacity>
+
                 </View>
             </View>
             <Modal visible={isModalVisible} transparent={true} animationType="fade">
