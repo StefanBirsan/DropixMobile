@@ -17,7 +17,8 @@ const AWBModal = ({ awbInfo, address, city, status, productName }) => {
 
 const styles = StyleSheet.create({
     info:{
-
+        fontSize: 18,
+        marginTop: 10,
     },
     modalContainer: {
         flex: 1,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     header: {
-        fontSize: 18,
+        fontSize: 25,
         fontWeight: 'bold',
         marginBottom: 15,
     },

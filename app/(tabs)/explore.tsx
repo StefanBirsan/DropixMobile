@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import { getDatabase, ref, get} from "@firebase/database";
-
+import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 type RootStackParamList = {
@@ -118,16 +118,17 @@ const App = () => {
                     onRegionChangeComplete={onRegionChange}>
                 </MapView>
                 <View style={styles.focusButtonContainer}>
+                    <TouchableOpacity style={styles.showInfo} onPress={() => navigation.navigate('index')}>
+                        <Text style={styles.infoText}>Back to Menu</Text>
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={styles.focusButton} onPress={focusMap}>
                         <Text style={styles.focusButtonText}>Focus</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
-                        <Text style={styles.infoText}>Show Package Info</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.showInfo} onPress={() => navigation.navigate('index')}>
-                        <Text style={styles.infoText}>Back to menu</Text>
-                    </TouchableOpacity>
 
+                    <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
+                        <Text style={styles.infoText}>Package Info</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             <Modal visible={isModalVisible} transparent={true} animationType="fade">
@@ -156,17 +157,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    buttonsContainer: {
-        flexDirection: 'row',
-        width: '85%',
-        marginTop: 10,
-    },
-    closeButton: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        backgroundColor: '#8D77AB',
-        borderRadius: 12,
-    },
     map: {
         width: '100%',
         height: '100%',
@@ -189,28 +179,52 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
     },
-    buttonText: {
-        fontSize: 20,
-        color: '#FFF',
-    },
     focusButtonContainer: {
         position: 'absolute',
-        bottom: 15,
-        left: '43%',
-        transform: [{ translateX: -50 }],
-        padding: 10,
+        bottom: wp('10%'),
         borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'space-evenly',
     },
     focusButton: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
         backgroundColor: '#8D77AB',
-        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#664e8b',
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+        borderRadius: 20,
+        alignItems: 'center',
+        marginTop: 20,
+        elevation: 5,
     },
     focusButtonText: {
         color: '#fff',
         fontWeight: 'bold',
         textAlign: 'center',
+        fontSize: 25,
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 3,
+    },
+    showInfo:{
+        backgroundColor: '#8D77AB',
+        borderWidth: 1,
+        borderColor: '#664e8b',
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 20,
+        elevation: 5,
+    },
+    infoText:{
+        color:"#FFF",
+        fontWeight:"bold",
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 3,
     },
     modalContainer: {
         flex: 1,
@@ -227,20 +241,32 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 3,
-        borderColor: '#8D77AB',
+        borderWidth: 4,
+        borderColor: '#664e8b',
     },
-    showInfo:{
+    closeButton: {
         backgroundColor: '#8D77AB',
+        borderWidth: 1,
+        borderColor: '#664e8b',
         paddingVertical: 8,
         paddingHorizontal: 8,
-        borderRadius: 12,
+        borderRadius: 20,
         alignItems: 'center',
         marginTop: 20,
+        elevation: 5,
+        width: '40%',
     },
-    infoText:{
-        color:"#FFF",
-        fontWeight:"bold",
+    buttonText: {
+        fontSize: 25,
+        color: '#FFF',
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 3,
+    },
+    buttonsContainer: {
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 10,
     },
 });
 
