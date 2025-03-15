@@ -66,7 +66,11 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
 
     const navigateToSender = () => {
         router.push('/sender');
-    }
+    };
+
+    const navigateToWarehouse = () => {
+        router.push('/warehouse');
+    };
 
     return (
         <View style={styles.Screen}>
@@ -79,7 +83,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
                     <Text style={styles.TextFooter}>Scan QR Code</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Show Package')}>
+                <TouchableOpacity style={styles.FooterText} onPress={(navigateToWarehouse)}>
                     <Text style={styles.TextFooter}>Show Packages</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.FooterText} onPress={navigateToSender}>
