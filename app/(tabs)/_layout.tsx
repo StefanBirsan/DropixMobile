@@ -20,8 +20,11 @@ export default function TabLayout() {
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
+              display:'none'
           },
-          default: {},
+          default: {
+              display: 'none',
+          },
         }),
       }}>
       <Tabs.Screen
