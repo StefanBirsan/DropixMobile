@@ -1,11 +1,8 @@
 import {Alert, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import CustomButton1 from "@/components/customK/CustomButton1";
-import ReactNative from "react-native";
 import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "@firebase/auth";
 import {app, getAuth} from "@/scripts/firebase";
-import {useEffect, useState} from "react";
-
-const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+import React, {useEffect, useState} from "react";
+import { KeyboardAvoidingView } from 'react-native';
 
 type AuthScreenProps = {
     email: string;
@@ -24,9 +21,10 @@ type AuthenticatedScreenProps = {
 
 
 const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }: AuthScreenProps) =>  {
+    const [focused, setFocused] = useState(false);
 
   return (
-    <View style={styles.Screen}>
+      <View style={styles.Screen}>
         <View style={styles.TextContainer}>
             <Text style={styles.TitleText}>
                 Welcome to DropX
@@ -36,7 +34,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
             </Text>
         </View>
 
-        <View style={styles.LoginForm}>
+        <KeyboardAvoidingView behavior="padding" style={styles.LoginForm} >
             <View style={styles.Credentials}>
                 <Text style={styles.leftText}>Email</Text>
                 <TextInput
@@ -53,45 +51,39 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
                     secureTextEntry
                 />
             </View>
-            <TouchableOpacity style={styles.LoginForm} onPress={handleAuthentication}>
+            <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
                 <Text>Login</Text>
             </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
     </View>
   );
 }
 
 const AuthenticatedScreen = ({ handleAuthentication }: AuthenticatedScreenProps) => {
 
-    const [userInfo, setUserInfo] = useState({
-        name: 'username',
-        input: '',
-    });
-
     return (
         <View style={styles.ScreenAuthenticated}>
             <View style={styles.Header}>
-                <Text style={styles.WelcomeText}>Welcome, (user)!</Text>
+                <Text style={styles.WelcomeText}>Welcome!</Text>
             </View>
 
             <View style={styles.Body}>
                 <TouchableOpacity style={styles.FooterText} onPress={() => console.log("Scan QR Code")}>
-                    <Text>Scan QR Code</Text>
+                    <Text style={styles.TextFooter}>Scan QR Code</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.FooterText} onPress={() => console.log("Show Package")}>
-                    <Text>Show Packages</Text>
+                    <Text style={styles.TextFooter}>Show Packages</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.Footer}>
-                <TouchableOpacity style={styles.FooterText} onPress={handleAuthentication}>
-                    <Text>Log Out</Text>
+                <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
+                    <Text style={styles.TextLogout}>Log Out</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
-
 
 export default function HomeScreen() {
 
@@ -246,10 +238,10 @@ const styles = StyleSheet.create({
     Header: {
         height: '10%',
         backgroundColor: "#8D77AB",
-        paddingTop: 20,
+        paddingTop: 26,
         alignItems: 'center',
-        borderBottomLeftRadius:15,
-        borderBottomRightRadius:15,
+        borderRadius: 15,
+        marginTop: 30,
     },
     WelcomeText: {
         fontSize: 30,
@@ -261,7 +253,7 @@ const styles = StyleSheet.create({
     Body: {
         flex: 3,
         alignItems: "center",
-        justifyContent: "space-evenly",
+        marginTop: 30,
     },
     Footer: {
         flex: 1,
@@ -276,7 +268,26 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         marginBottom: 12,
+        justifyContent: 'flex-end',
+    },
+    LoginButton:{
+        backgroundColor: '#E1EACD',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginBottom: 12,
         justifyContent: 'flex-end'
+    },
+    TextFooter:{
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    TextLogout:{
+        color: 'black',
+        fontSize: 25,
+
     },
 });
 
