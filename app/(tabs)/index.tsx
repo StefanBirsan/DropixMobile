@@ -61,8 +61,12 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
     const router = useRouter();
 
     const navigateToScanner = () => {
-        router.push('/scanner'); // Navigate to Scanner screen
+        router.push('/scanner');
     };
+
+    const navigateToSender = () => {
+        router.push('/sender');
+    }
 
     return (
         <View style={styles.Screen}>
@@ -78,8 +82,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
                 <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Show Package')}>
                     <Text style={styles.TextFooter}>Show Packages</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Send Package')}>
+                <TouchableOpacity style={styles.FooterText} onPress={navigateToSender}>
                     <Text style={styles.TextFooter}>Send Package</Text>
                 </TouchableOpacity>
             </View>
