@@ -57,6 +57,15 @@ export default function TabLayout() {
                 ),
             }}
         />
+        <Tabs.Screen
+            name="sender"
+            options={{
+                title: 'Sender',
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="cube-outline" size={size} color={color} />
+                ),
+            }}
+        />
 
     </Tabs>
 
