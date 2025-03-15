@@ -49,7 +49,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
                         />
                     </View>
                     <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
-                        <Text>Login</Text>
+                        <Text style={styles.TextLogin}>Login</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
@@ -85,7 +85,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
             </View>
 
             <View style={styles.Footer}>
-                <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
+                <TouchableOpacity style={styles.LogoutButton} onPress={handleAuthentication}>
                     <Text style={styles.TextLogout}>Log Out</Text>
                 </TouchableOpacity>
             </View>
@@ -182,17 +182,25 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
     },
     TitleText: {
-        fontSize: 33,
+        fontSize: 30,
         fontWeight: 'bold',
         color: 'white',
         outline: 'black',
         textShadowColor: 'black',
         textShadowOffset: {width:1, height: 1},
         textShadowRadius: 4,
+        backgroundColor: '#BAD8B6',
+        borderRadius: 100,
+        borderColor: '#6256CA',
+        borderWidth: 2,
+        padding: '2%',
+        marginBottom: '10%',
+        textAlign: 'center',
+        width: '100%',
     },
     InfoText: {
         paddingTop: 30,
-        fontSize: 18,
+        fontSize: 19,
         textAlign: 'center',
     },
     LoginForm: {
@@ -203,6 +211,23 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
     },
+    LoginButton: {
+        backgroundColor: '#E1EACD',
+        borderColor: '#6256CA',
+        marginTop: wp('5%'),
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 100,
+        alignItems: 'center',
+        borderWidth: 2,
+        borderStyle: 'solid',
+        elevation: 5,
+    },
+    TextLogin: {
+        color: 'black',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
     Credentials: {
         width: wp('100%'),
         height: '60%',
@@ -211,7 +236,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
     },
     LabelField: {
-        fontSize: 35,
+        fontSize: 20,
         backgroundColor: 'white',
         borderRadius: 30,
         width: '80%',
@@ -220,8 +245,13 @@ const styles = StyleSheet.create({
         margin: 15,
     },
     leftText:{
-        color: '#FFF',
-        left: '-25%',
+        left: '-20%',
+        color: 'white',
+        outline: 'black',
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 2,
+        fontSize: 20,
     },
     ScreenAuthenticated: {
         height: '100%',
@@ -271,12 +301,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    LoginButton:{
+    LogoutButton:{
         backgroundColor: '#E1EACD',
         borderColor: '#6256CA',
         paddingVertical: 12,
         paddingHorizontal: 20,
-        fontWeight: 'bold',
         borderRadius: 100,
         alignItems: 'center',
         borderWidth: 2,
