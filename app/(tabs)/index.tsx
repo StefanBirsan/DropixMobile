@@ -1,8 +1,9 @@
-import {Alert, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "@firebase/auth";
-import {app, getAuth} from "@/scripts/firebase";
-import React, {useEffect, useState} from "react";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@firebase/auth';
+import { app, getAuth } from '@/scripts/firebase';
+import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
+import { useRouter } from 'expo-router';
 
 type AuthScreenProps = {
     email: string;
@@ -19,61 +20,60 @@ type AuthenticatedScreenProps = {
     handleAuthentication: () => void;
 };
 
-
-const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }: AuthScreenProps) =>  {
-    const [focused, setFocused] = useState(false);
-
-  return (
-      <View style={styles.Screen}>
-        <View style={styles.TextContainer}>
-            <Text style={styles.TitleText}>
-                Welcome to DropX
-            </Text>
-            <Text style={styles.InfoText}>
-                Interactive courier app, please log in with your given credentials in order to continue.
-            </Text>
-        </View>
-        <KeyboardAvoidingView behavior="padding" style={styles.LoginForm} >
-        <View style={styles.LoginForm}>
-            <View style={styles.Credentials}>
-                <Text style={styles.leftText}>Email</Text>
-                <TextInput
-                    style={styles.LabelField}
-                    value={email}
-                    onChangeText={setEmail}
-                    autoCapitalize="none"
-                />
-                <Text style={styles.leftText}>Password</Text>
-                <TextInput
-                    style={styles.LabelField}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
+const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }: AuthScreenProps) => {
+    return (
+        <View style={styles.Screen}>
+            <View style={styles.TextContainer}>
+                <Text style={styles.TitleText}>Welcome to DropX</Text>
+                <Text style={styles.InfoText}>
+                    Interactive courier app, please log in with your given credentials in order to continue.
+                </Text>
             </View>
+            <KeyboardAvoidingView behavior="padding" style={styles.LoginForm}>
+                <View style={styles.LoginForm}>
+                    <View style={styles.Credentials}>
+                        <Text style={styles.leftText}>Email</Text>
+                        <TextInput
+                            style={styles.LabelField}
+                            value={email}
+                            onChangeText={setEmail}
+                            autoCapitalize="none"
+                        />
+                        <Text style={styles.leftText}>Password</Text>
+                        <TextInput
+                            style={styles.LabelField}
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry
+                        />
+                    </View>
+                    <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
+                        <Text>Login</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
+        </View>
+    );
+};
 
-            <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
-                <Text>Login</Text>
-            </TouchableOpacity>
-        </KeyboardAvoidingView>
-        </View?
-    </View>
-  );
-}
+const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreenProps) => {
+    const router = useRouter();
 
-const AuthenticatedScreen = ({ handleAuthentication }: AuthenticatedScreenProps) => {
+    const navigateToScanner = () => {
+        router.push('/scanner'); // Navigate to Scanner screen
+    };
 
     return (
         <View style={styles.ScreenAuthenticated}>
             <View style={styles.Header}>
-                <Text style={styles.WelcomeText}>Welcome!</Text>
+                <Text style={styles.WelcomeText}>Welcome, {user?.email}!</Text>
             </View>
 
             <View style={styles.Body}>
-                <TouchableOpacity style={styles.FooterText} onPress={() => console.log("Scan QR Code")}>
+                <TouchableOpacity style={styles.FooterText} onPress={navigateToScanner}>
                     <Text style={styles.TextFooter}>Scan QR Code</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.FooterText} onPress={() => console.log("Show Package")}>
+                <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Show Package')}>
                     <Text style={styles.TextFooter}>Show Packages</Text>
                 </TouchableOpacity>
             </View>
@@ -88,7 +88,6 @@ const AuthenticatedScreen = ({ handleAuthentication }: AuthenticatedScreenProps)
 };
 
 export default function HomeScreen() {
-
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [user, setUser] = useState<any>(null);
@@ -102,7 +101,6 @@ export default function HomeScreen() {
 
         return () => unsubscribe();
     }, [auth]);
-
 
     const handleAuthentication = async () => {
         try {
@@ -147,7 +145,6 @@ export default function HomeScreen() {
     );
 }
 
-
 const showErrorAlert = (errorMessage: string | string[]) => {
     let displayMessage;
 
@@ -163,13 +160,9 @@ const showErrorAlert = (errorMessage: string | string[]) => {
         displayMessage = 'An unknown error occurred. Please try again later.';
     }
 
-    Alert.alert(
-        'Authentication Failed',
-        displayMessage,
-        [{ text: 'OK' }],
-        { cancelable: true }
-    );
+    Alert.alert('Authentication Failed', displayMessage, [{ text: 'OK' }], { cancelable: true });
 };
+
 
 
 const styles = StyleSheet.create({

@@ -48,6 +48,16 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Ionicons size={30} name="person-outline" color={color} />,
         }}
       />
+        <Tabs.Screen
+            name="scanner"
+            options={{
+                title: 'Scan QR Code',
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="qr-code-outline" size={size} color={color} />
+                ),
+            }}
+        />
+
     </Tabs>
 
   );
