@@ -6,7 +6,7 @@ const AWBModal = ({ awbInfo }) => {
     return (
         <View style={styles.modalContainer}>
             <View style={styles.modalBox}>
-                <Text style={styles.header}>AWB Info2</Text>
+                <Text style={styles.header}>AWB Info</Text>
                     <Text>{awbInfo}</Text>
             </View>
         </View>
