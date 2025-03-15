@@ -74,8 +74,13 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
                 <TouchableOpacity style={styles.FooterText} onPress={navigateToScanner}>
                     <Text style={styles.TextFooter}>Scan QR Code</Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Show Package')}>
                     <Text style={styles.TextFooter}>Show Packages</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.FooterText} onPress={() => console.log('Send Package')}>
+                    <Text style={styles.TextFooter}>Send Package</Text>
                 </TouchableOpacity>
             </View>
 
@@ -226,12 +231,12 @@ const styles = StyleSheet.create({
     Header: {
         height: wp('25%'),
         backgroundColor: "#8D77AB",
-        paddingTop: wp('6%'),
+        paddingTop: wp('11%'),
         alignItems: 'center',
-        borderRadius: 15,
+        borderRadius: 20,
     },
     WelcomeText: {
-        fontSize: 30,
+        fontSize: wp('9%'),
         color: 'white',
         textShadowColor: 'black',
         textShadowOffset: {width:1, height: 1},
@@ -239,37 +244,36 @@ const styles = StyleSheet.create({
     },
     Body: {
         flex: 3,
-        alignItems: "center",
+        justifyContent: 'space-evenly',
         marginTop: 30,
-    },
-    Footer: {
-        flex: 1,
-        height: '20%',
-        alignItems: "center",
-        justifyContent: "space-evenly",
+        width: '100%',
     },
     FooterText:{
         backgroundColor: '#6256CA',
         paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        alignItems: 'center',
+        borderRadius: 10,
         marginBottom: 12,
-        justifyContent: 'flex-end',
-    },
-    LoginButton:{
-        backgroundColor: '#E1EACD',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
+        width: wp('70%'),
         alignItems: 'center',
-        marginBottom: 12,
-        justifyContent: 'flex-end'
+        alignSelf: 'center',
     },
     TextFooter:{
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    Footer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    LoginButton:{
+        backgroundColor: '#E1EACD',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        fontWeight: 'bold',
+        borderRadius: 10,
+        alignItems: 'center',
     },
     TextLogout:{
         color: 'black',
