@@ -91,7 +91,7 @@ export default function MainScreen() {
                                     style={{
                                     backgroundColor: isButtonDisabled ? "grey" : '#E1EACD',
                                     borderColor: '#6256CA',
-                                    marginTop: wp('10%'),
+                                    marginTop: wp('15%'),
                                     paddingVertical: 12,
                                     paddingHorizontal: 20,
                                     borderRadius: 100,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F9F6E6",
     },
     Body: {
-        flex: 4,
+        flex: 5,
         alignItems: "center",
         justifyContent: "space-evenly",
     },
