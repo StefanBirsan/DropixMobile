@@ -4,6 +4,7 @@ import { app, getAuth } from '@/scripts/firebase';
 import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 type AuthScreenProps = {
     email: string;
@@ -64,9 +65,9 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
     };
 
     return (
-        <View style={styles.ScreenAuthenticated}>
+        <View style={styles.Screen}>
             <View style={styles.Header}>
-                <Text style={styles.WelcomeText}>Welcome, {user?.email}!</Text>
+                <Text style={styles.WelcomeText}>Welcome, {user?.email.split('@')[0]}!</Text>
             </View>
 
             <View style={styles.Body}>
@@ -127,7 +128,7 @@ export default function HomeScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.Screen}>
             {user ? (
                 <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
             ) : (
@@ -163,16 +164,7 @@ const showErrorAlert = (errorMessage: string | string[]) => {
     Alert.alert('Authentication Failed', displayMessage, [{ text: 'OK' }], { cancelable: true });
 };
 
-
-
 const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#FFF'
-    },
     Screen: {
         height: '100%',
         width: '100%',
@@ -207,7 +199,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 50,
     },
     Credentials: {
-        width: '100%',
+        width: wp('100%'),
         height: '60%',
         alignItems: 'center',
         marginTop: '5%',
@@ -232,12 +224,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#F9F6E6",
     },
     Header: {
-        height: '10%',
+        height: wp('25%'),
         backgroundColor: "#8D77AB",
-        paddingTop: 26,
+        paddingTop: wp('6%'),
         alignItems: 'center',
         borderRadius: 15,
-        marginTop: 30,
     },
     WelcomeText: {
         fontSize: 30,
