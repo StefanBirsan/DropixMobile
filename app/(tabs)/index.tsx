@@ -33,8 +33,8 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
                 Interactive courier app, please log in with your given credentials in order to continue.
             </Text>
         </View>
-
         <KeyboardAvoidingView behavior="padding" style={styles.LoginForm} >
+        <View style={styles.LoginForm}>
             <View style={styles.Credentials}>
                 <Text style={styles.leftText}>Email</Text>
                 <TextInput
@@ -51,10 +51,12 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
                     secureTextEntry
                 />
             </View>
+
             <TouchableOpacity style={styles.LoginButton} onPress={handleAuthentication}>
                 <Text>Login</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
+        </View?
     </View>
   );
 }
@@ -215,7 +217,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '60%',
         alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: '5%',
+        justifyContent: 'space-evenly',
     },
     LabelField: {
         fontSize: 35,
