@@ -1,10 +1,12 @@
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {Alert, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@firebase/auth';
 import { app, getAuth } from '@/scripts/firebase';
 import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import BackgroundImage from '@/assets/images/Background1.png';
+
 
 type AuthScreenProps = {
     email: string;
@@ -73,7 +75,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
     };
 
     return (
-        <View style={styles.Screen}>
+        <ImageBackground source={BackgroundImage} style={styles.Screen} >
             <View style={styles.Header}>
                 <Text style={styles.WelcomeText}>Welcome, {user?.email.split('@')[0]}!</Text>
             </View>
@@ -96,7 +98,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
                     <Text style={styles.TextLogout}>Log Out</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
