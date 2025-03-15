@@ -233,7 +233,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#8D77AB",
         paddingTop: wp('11%'),
         alignItems: 'center',
-        borderRadius: 20,
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#664e8b',
+        elevation: 20,
     },
     WelcomeText: {
         fontSize: wp('9%'),
@@ -256,6 +259,7 @@ const styles = StyleSheet.create({
         width: wp('70%'),
         alignItems: 'center',
         alignSelf: 'center',
+        elevation: 5,
     },
     TextFooter:{
         color: 'white',
@@ -269,16 +273,20 @@ const styles = StyleSheet.create({
     },
     LoginButton:{
         backgroundColor: '#E1EACD',
+        borderColor: '#6256CA',
         paddingVertical: 12,
         paddingHorizontal: 20,
         fontWeight: 'bold',
-        borderRadius: 10,
+        borderRadius: 100,
         alignItems: 'center',
+        borderWidth: 2,
+        borderStyle: 'solid',
+        elevation: 5,
     },
     TextLogout:{
         color: 'black',
         fontSize: 25,
-
+        fontWeight: 'bold',
     },
 });
 
