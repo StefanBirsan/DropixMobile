@@ -66,6 +66,15 @@ export default function TabLayout() {
                 ),
             }}
         />
+        <Tabs.Screen
+            name="warehouse"
+            options={{
+                title: 'Warehouse',
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="cube-outline" size={size} color={color} />
+                ),
+            }}
+        />
 
     </Tabs>
 
