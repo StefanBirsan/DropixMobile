@@ -7,17 +7,18 @@ const AWBModal = ({ awbInfo, address, city, status, productName }) => {
         <View style={styles.modalContainer}>
             <View style={styles.modalBox}>
                 <Text style={styles.header}>AWB Info</Text>
-                    <Text>{awbInfo}</Text>
-                    <Text>{address}</Text>
-                    <Text>{city}</Text>
-                    <Text>{status}</Text>
-                    <Text>{productName}</Text>
+                    <Text style={styles.info}>{awbInfo}</Text>
+                    <Text style={styles.info}>{address}</Text>
+                    <Text style={styles.info}>{city}</Text>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    info:{
+
+    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
