@@ -49,6 +49,11 @@ export default function MainScreen() {
 
     return (
             <View style={styles.Screen}>
+                <View style={styles.Header}>
+                    <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
+                        <Text style={styles.backText}>Back</Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.Body}>
                     <KeyboardAvoidingView behavior="padding" style={styles.SendForm}>
                         <View style={styles.SendForm}>
@@ -86,7 +91,7 @@ export default function MainScreen() {
                                     style={{
                                     backgroundColor: isButtonDisabled ? "grey" : '#E1EACD',
                                     borderColor: '#6256CA',
-                                    marginTop: wp('5%'),
+                                    marginTop: wp('10%'),
                                     paddingVertical: 12,
                                     paddingHorizontal: 20,
                                     borderRadius: 100,
@@ -94,6 +99,7 @@ export default function MainScreen() {
                                     borderWidth: 2,
                                     borderStyle: 'solid',
                                     elevation: 5,
+                                    width: wp('30%'),
                                 }} onPress={(sendToDatabase)}>
                                     <Text style={styles.SendText}>Send</Text>
                                 </TouchableOpacity>
@@ -101,11 +107,6 @@ export default function MainScreen() {
                         </View>
                     </KeyboardAvoidingView>
 
-                </View>
-                <View style={styles.Footer}>
-                    <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
-                        <Text style={styles.backText}>Back</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -117,30 +118,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#F9F6E6",
     },
     Body: {
-        flex: 3,
+        flex: 4,
         alignItems: "center",
         justifyContent: "space-evenly",
     },
-    Footer: {
+    Header: {
         flex: 1,
-        height: '20%',
-        alignItems: "center",
+        marginLeft: wp('5%'),
         justifyContent: "space-evenly",
     },
     backButton:{
-        backgroundColor: '#6256CA',
-        paddingVertical: 12,
-        borderRadius: 10,
-        marginBottom: 12,
-        width: wp('70%'),
+        backgroundColor: '#8D77AB',
+        borderWidth: 1,
+        borderColor: '#664e8b',
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+        borderRadius: 100,
         alignItems: 'center',
-        alignSelf: 'center',
+        marginTop: 20,
         elevation: 5,
+        width: '20%',
     },
     backText:{
-        color: 'white',
+        color:"#FFF",
+        fontWeight:"bold",
         fontSize: 20,
-        fontWeight: 'bold',
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 3,
     },
     Credentials: {
         width: wp('100%'),
@@ -148,6 +153,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: '5%',
         justifyContent: 'space-evenly',
+        elevation: 5,
     },
     leftText:{
         left: '-20%',
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
         textShadowColor: 'black',
         textShadowOffset: {width:1, height: 1},
         textShadowRadius: 2,
-        fontSize: 20,
+        fontSize: 22,
     },
     LabelField: {
         fontSize: 20,
@@ -172,19 +178,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#8D77AB',
         width: '100%',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-    },
-    SendButton: {
-        backgroundColor: '#E1EACD',
-        borderColor: '#6256CA',
-        marginTop: wp('5%'),
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 100,
-        alignItems: 'center',
-        borderWidth: 2,
-        borderStyle: 'solid',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
         elevation: 5,
     },
     SendText: {
