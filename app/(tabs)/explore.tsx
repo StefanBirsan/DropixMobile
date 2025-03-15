@@ -4,6 +4,9 @@ import MapView, {Region} from 'react-native-maps';
 import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
 import { useRoute } from "@react-navigation/native";
+import { getDatabase, ref, get} from "@firebase/database";
+
+
 
 type RootStackParamList = {
     final: { scannedData: string; };
@@ -19,6 +22,12 @@ const App = () => {
 
     const route = useRoute();
     const { scannedData } = route.params as { scannedData: string };
+
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [status, setStatus] = useState("");
+    const [productName, setProductName] = useState("");
+    const [noData, setNoData] = useState("");
 
     const mapRef = useRef<any>(null);
     const [location, setLocation] = useState<LocationType | null>(null);
@@ -47,6 +56,28 @@ const App = () => {
     };
 
     useEffect(() => {
+
+        const fetchData = async () => {
+            const db = getDatabase();
+            const dbRef = ref(db, `BOX/${scannedData}`);
+
+            try {
+                const snapshot = await get(dbRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    setAddress(data.Address || "Unknown");
+                    setCity(data.City || "Unknown");
+                    setStatus(data.Status || "Unknown");
+                    setProductName(data.productName || "Unknown");
+                } else {
+                    setNoData("No data found for scannedData.");
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
@@ -64,7 +95,7 @@ const App = () => {
                 longitudeDelta: 0.02,
             });
         })();
-    }, []);
+    }, [scannedData]);
 
     const INITIAL_REGION = {
         latitude: location?.latitude ?? 0,
@@ -98,6 +129,10 @@ const App = () => {
                     <View style={styles.modalBox}>
                         <AWBModal
                             awbInfo={scannedData}
+                            address={address}
+                            city={city}
+                            status={status}
+                            productName={productName}
                         />
                         <View style={styles.buttonsContainer}>
                             <TouchableOpacity style={styles.closeButton} onPress={onClose}>

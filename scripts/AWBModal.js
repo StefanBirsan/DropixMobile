@@ -2,12 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 
-const AWBModal = ({ awbInfo }) => {
+const AWBModal = ({ awbInfo, address, city, status, productName }) => {
     return (
         <View style={styles.modalContainer}>
             <View style={styles.modalBox}>
                 <Text style={styles.header}>AWB Info</Text>
                     <Text>{awbInfo}</Text>
+                    <Text>{address}</Text>
+                    <Text>{city}</Text>
+                    <Text>{status}</Text>
+                    <Text>{productName}</Text>
             </View>
         </View>
     );
