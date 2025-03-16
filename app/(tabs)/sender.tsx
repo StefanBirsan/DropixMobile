@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
         textShadowOffset: {width:1, height: 1},
         textShadowRadius: 2,
         fontSize: 22,
+        marginTop: wp('2%'),
     },
     LabelField: {
         fontSize: 20,
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderWidth: 2,
         margin: 15,
+        elevation: 10,
     },
     SendForm: {
         flex: 1,

@@ -1,33 +1,36 @@
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-import {widthPercentageToDP as wp} from "react-native-responsive-screen";
-import React, {useEffect, useState} from "react";
-import {app, auth, getApp, getAuth, ref, database, set, push, get} from "@/scripts/firebase";
+import {ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
+import React, { useEffect, useState } from "react";
+import { app, auth, getApp, getAuth, ref, database, set, push, get } from "@/scripts/firebase";
+import BackgroundImage from '@/assets/images/Background1.png';
 
 export default function MainScreen() {
     const navigation = useNavigation();
-        const [packages, setPackages] = useState<any[]>([]);
+    const [packages, setPackages] = useState<any[]>([]);
 
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const snapshot = await get(ref(database, 'BOX'));
-                    if (snapshot.exists()) {
-                        const data = snapshot.val();
-                        const packageList = Object.keys(data).map(key => data[key]);
-                        setPackages(packageList);
-                    } else {
-                        console.log('No data available');
-                    }
-                } catch (error) {
-                    console.error('Error fetching data from Firebase Realtime Database:', error);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const snapshot = await get(ref(database, 'BOX'));
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const packageList = Object.keys(data).map(key => data[key]);
+                    setPackages(packageList);
+                } else {
+                    console.log('No data available');
                 }
-            };
+            } catch (error) {
+                console.error('Error fetching data from Firebase Realtime Database:', error);
+            }
+        };
 
-            fetchData();
-        }, []);
-        return (
-            <ScrollView style={styles.Screen}>
+        fetchData();
+    }, []);
+
+    return (
+        <ImageBackground source={BackgroundImage} style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.Body}>
                     {packages.map((pkg, index) => (
                         <View key={index} style={styles.packageContainer}>
@@ -38,57 +41,69 @@ export default function MainScreen() {
                         </View>
                     ))}
                 </View>
-                <View style={styles.Footer}>
-                    <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
-                        <Text style={styles.backText}>Back</Text>
-                    </TouchableOpacity>
-                </View>
             </ScrollView>
-        )
-    };
+            <View style={styles.Footer}>
+                <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
+                    <Text style={styles.backText}>Back</Text>
+                </TouchableOpacity>
+            </View>
+        </ImageBackground>
+    );
+};
 
 const styles = StyleSheet.create({
-    Screen: {
-        height: '100%',
+    container: {
+        flex: 1,
         backgroundColor: "#F9F6E6",
     },
+    scrollContainer: {
+        paddingBottom: 100,
+        paddingTop: wp('5%'),
+    },
     Body: {
-        flex: 3,
         alignItems: "center",
         justifyContent: "space-evenly",
+        padding: 20,
     },
     Footer: {
-        flex: 1,
-        height: '20%',
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        backgroundColor: 'black'
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: 80,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     backButton: {
-        backgroundColor: '#6256CA',
-        paddingVertical: 12,
+        backgroundColor: '#8D77AB',
+        borderWidth: 1,
+        borderColor: '#664e8b',
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+        borderRadius: 20,
+        alignItems: 'center',
+        elevation: 5,
+        width: wp('40%'),
+    },
+    backText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 25,
+        textShadowColor: 'black',
+        textShadowOffset: {width:1, height: 1},
+        textShadowRadius: 3,
+    },
+    packageContainer: {
+        backgroundColor: '#F9F6E6',
+        paddingVertical: 15,
+        borderWidth: 1,
+        borderColor: '#664e8b',
         borderRadius: 10,
-        marginBottom: 12,
-        width: wp('70%'),
+        marginBottom: wp('5%'),
+        width: wp('85%'),
         alignItems: 'center',
         alignSelf: 'center',
         elevation: 5,
-    },
-    backText: {
-        color: 'white',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    packageContainer: {
-        marginBottom: 20,
-        padding: 15,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        elevation: 3,  // For Android shadow
-        shadowColor: '#000',  // For iOS shadow
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
     },
     packageTitle: {
         fontSize: 18,
@@ -100,3 +115,4 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 });
+
