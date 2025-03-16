@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
     },
     TitleText: {
-        fontSize: 30,
+        fontSize: 32,
         fontWeight: 'bold',
         color: 'white',
         outline: 'black',
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
     InfoText: {
         paddingTop: 30,
-        fontSize: 19,
+        fontSize: 20,
         textAlign: 'center',
     },
     LoginForm: {
@@ -232,10 +232,11 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderStyle: 'solid',
         elevation: 5,
+        width: '30%',
     },
     TextLogin: {
         color: 'black',
-        fontSize: 20,
+        fontSize: 23,
         fontWeight: 'bold',
     },
     Credentials: {
@@ -250,18 +251,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 30,
         width: '80%',
+        height: '15%',
         textAlign: 'center',
         borderWidth: 2,
         margin: 15,
     },
     leftText:{
-        left: '-20%',
+        left: '-25%',
         color: 'white',
         outline: 'black',
         textShadowColor: 'black',
         textShadowOffset: {width:1, height: 1},
         textShadowRadius: 2,
-        fontSize: 20,
+        fontSize: 23,
     },
     ScreenAuthenticated: {
         height: '100%',

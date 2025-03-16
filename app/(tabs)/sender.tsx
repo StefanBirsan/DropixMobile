@@ -91,7 +91,7 @@ export default function MainScreen() {
                                     style={{
                                     backgroundColor: isButtonDisabled ? "grey" : '#E1EACD',
                                     borderColor: '#6256CA',
-                                    marginTop: wp('15%'),
+                                    marginTop: wp('20%'),
                                     paddingVertical: 12,
                                     paddingHorizontal: 20,
                                     borderRadius: 100,
@@ -99,7 +99,7 @@ export default function MainScreen() {
                                     borderWidth: 2,
                                     borderStyle: 'solid',
                                     elevation: 5,
-                                    width: wp('30%'),
+                                    width: wp('40%'),
                                 }} onPress={(sendToDatabase)}>
                                     <Text style={styles.SendText}>Send</Text>
                                 </TouchableOpacity>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         elevation: 5,
-        width: '20%',
+        width: '17%',
     },
     backText:{
         color:"#FFF",
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 30,
         width: '80%',
+        height: '13%',
         textAlign: 'center',
         borderWidth: 2,
         margin: 15,
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     },
     SendText: {
         color: 'black',
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
     },
 });

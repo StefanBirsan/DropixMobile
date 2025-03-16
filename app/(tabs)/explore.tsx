@@ -200,6 +200,13 @@ const App = () => {
         }
     };
 
+    const [showMarker, setShowMarker] = useState(true);
+
+    const handleCalloutPress = () => {
+        openGoogleMaps(); // Open Google Maps
+        setShowMarker(false); // Hide marker after pressing callout
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.mapContainer}>
@@ -221,9 +228,9 @@ const App = () => {
                     )}
                     {region && (
                             <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
-                                <Callout onPress={openGoogleMaps}>
-                                    <View style={{ padding: 5 }}>
-                                        <TouchableOpacity style={styles.button}>
+                                <Callout onPress={handleCalloutPress}>
+                                    <View>
+                                        <TouchableOpacity style={styles.calloutButton}>
                                             <Text>{foundLocation?.Address}, {foundLocation?.City}</Text>
                                             <Text style={{ color: "blue", textDecorationLine: "underline" }}>
                                                 Navigate
@@ -295,6 +302,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 10,
         alignItems: 'center',
+    },
+    calloutButton: {
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginLeft: 17,
+        marginTop: 23,
     },
     focusButtonContainer: {
         position: 'absolute',
