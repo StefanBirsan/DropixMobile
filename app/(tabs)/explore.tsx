@@ -133,7 +133,6 @@ const App = () => {
                 if (snapshot.exists()) {
                     const data = snapshot.val();
 
-                    // Extract AWB ID, Address, and City
                     const locationList: LocationData[] = Object.keys(data).map(awbID => ({
                         id: awbID,
                         Address: data[awbID].Address,
@@ -153,7 +152,6 @@ const App = () => {
         fetchDataAddress();
     }, []);
 
-    // Search AWB ID and get location
     const searchByAWB = async () => {
         const result = locations.find(loc => loc.id === scannedData);
         if (result) {

@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import React, { useEffect, useState } from "react";
 import { app, auth, getApp, getAuth, ref, database, set, push, get } from "@/scripts/firebase";
-import BackgroundImage from '@/assets/images/Background1.png';
+import BackgroundImage from "@/assets/images/Background1.png";
 
 export default function MainScreen() {
     const navigation = useNavigation();
@@ -28,6 +28,22 @@ export default function MainScreen() {
         fetchData();
     }, []);
 
+    const getStatusColor = (status: string) => {
+        switch (status) {
+            case "Processing":
+                return "darkorange";
+            case "Delivered":
+                return "green";
+            case "In Transit":
+                return "orange";
+            case "Pending":
+                return "purple";
+            default:
+                return "gray"; // Default color if status is unknown
+        }
+    };
+
+
     return (
         <ImageBackground source={BackgroundImage} style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -36,7 +52,10 @@ export default function MainScreen() {
                         <View key={index} style={styles.packageContainer}>
                             <Text style={styles.packageInfo}>Address: {pkg.Address}</Text>
                             <Text style={styles.packageInfo}>City: {pkg.City}</Text>
-                            <Text style={styles.packageInfo}>Status: {pkg.Status}</Text>
+                            <Text style={[styles.packageInfo, {color: getStatusColor(pkg.Status)}]}>Status: {pkg.Status}</Text>
+                            {pkg.plasticBags > 0 && (
+                                <Text style={styles.packageInfo}>Plastic Bags: {pkg.plasticBags}</Text>
+                            )}
                             <Text style={styles.packageTitle}>Product: {pkg.productName}</Text>
                         </View>
                     ))}
@@ -113,6 +132,7 @@ const styles = StyleSheet.create({
     packageInfo: {
         fontSize: 14,
         marginBottom: 5,
+        fontWeight: 'bold',
     },
 });
 
