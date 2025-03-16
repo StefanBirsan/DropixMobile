@@ -1,22 +1,36 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
-import MapView, {Region} from 'react-native-maps';
+import {View, Text, StyleSheet, TouchableOpacity, Modal, Linking, Button} from 'react-native';
+import MapView, {Marker, Region} from 'react-native-maps';
 import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import { getDatabase, ref, get} from "@firebase/database";
+import { getDatabase } from "@firebase/database";
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
-
+import { ref, database, get } from "@/scripts/firebase";
+import { GeocodingAPI} from "@/scripts/firebase";
 
 type RootStackParamList = {
     final: { scannedData: string; };
 };
+
+interface LocationData {
+    id: string;
+    Address: string;
+    City: string;
+}
 
 type LocationType = {
     latitude: number;
     longitude: number;
     accuracy?: number | null;
 };
+
+interface RegionData {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+}
 
 const App = () => {
 
@@ -58,7 +72,6 @@ const App = () => {
     };
 
     useEffect(() => {
-
         const fetchData = async () => {
             const db = getDatabase();
             const dbRef = ref(db, `BOX/${scannedData}`);
@@ -106,6 +119,79 @@ const App = () => {
         longitudeDelta: 0.02,
     };
 
+    const [locations, setLocations] = useState<LocationData[]>([]); // Define correct type
+    const [foundLocation, setFoundLocation] = useState<LocationData | null>(null);
+    const [region, setRegion] = useState<RegionData | null>(null); // Define correct type
+
+    useEffect(() => {
+        const fetchDataAddress = async () => {
+            try {
+                const db = getDatabase();
+                const snapshot = await get(ref(db, "BOX"));
+
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+
+                    const locationList: LocationData[] = Object.keys(data).map(awbID => ({
+                        id: awbID,
+                        Address: data[awbID].Address,
+                        City: data[awbID].City,
+                    }));
+
+                    setLocations(locationList);
+                    console.log("Fetched Locations:", locationList);
+                } else {
+                    console.log("No data available");
+                }
+            } catch (error) {
+                console.error("Error fetching data from Firebase:", error);
+            }
+        };
+
+        fetchDataAddress();
+    }, []);
+
+    const searchByAWB = async () => {
+        const result = locations.find(loc => loc.id === scannedData);
+        if (result) {
+            console.log("Found Location:", result);
+            setFoundLocation(result);
+            await getCoordinates(result.Address, result.City);
+        } else {
+            console.log("AWB ID not found!");
+            setFoundLocation(null);
+            setRegion(null);
+        }
+    };
+
+    const getCoordinates = async (address: string, city: string) => {
+        const query = encodeURIComponent(`${address}, ${city}`);
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${'AIzaSyBnOXyN8eHSbv-grb_rkKlLxT74oBntUHM'}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log("Google API Response:", JSON.stringify(data, null, 2)); // 🔍 Log full response
+
+            if (data.status === "OK" && data.results.length > 0) {
+                const location = data.results[0].geometry.location;
+                console.log("Found Coordinates:", location);
+
+                setRegion({
+                    latitude: location.lat,
+                    longitude: location.lng,
+                    latitudeDelta: 0.01,
+                    longitudeDelta: 0.01,
+                });
+            } else {
+                console.log("Google API Error:", data.status);
+                setRegion(null);
+            }
+        } catch (error) {
+            console.error("Error fetching coordinates:", error);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.mapContainer}>
@@ -115,15 +201,27 @@ const App = () => {
                     showsUserLocation={!!location}
                     showsMyLocationButton
                     ref={mapRef}
-                    onRegionChangeComplete={onRegionChange}>
+                    onRegionChangeComplete={onRegionChange}
+                >
+                    {foundLocation ? (
+                        <View>
+                            <Text>AWB ID: {scannedData}</Text>
+                            <Text>Address: {foundLocation.Address}, {foundLocation.City}</Text>
+                        </View>
+                    ) : (
+                        <Text>No Address Found for AWB ID: {scannedData}</Text>
+                    )}
+                    {region && (
+                            <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
+                    )}
                 </MapView>
                 <View style={styles.focusButtonContainer}>
                     <TouchableOpacity style={styles.showInfo} onPress={() => navigation.navigate('index')}>
                         <Text style={styles.infoText}>Back to Menu</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.focusButton} onPress={focusMap}>
-                        <Text style={styles.focusButtonText}>Focus</Text>
+                    <TouchableOpacity style={styles.focusButton} onPress={searchByAWB}>
+                        <Text style={styles.focusButtonText}>Take Me There</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.showInfo} onPress={() => setModalVisible(true)}>
