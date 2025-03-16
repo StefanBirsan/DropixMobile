@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Linking, Button} from 'react-native';
-import MapView, {Marker, Region} from 'react-native-maps';
+import MapView, {Callout, Marker, Region} from 'react-native-maps';
 import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
 import {useNavigation, useRoute} from "@react-navigation/native";
@@ -119,9 +119,10 @@ const App = () => {
         longitudeDelta: 0.02,
     };
 
-    const [locations, setLocations] = useState<LocationData[]>([]); // Define correct type
+    const [locations, setLocations] = useState<LocationData[]>([]);
     const [foundLocation, setFoundLocation] = useState<LocationData | null>(null);
-    const [region, setRegion] = useState<RegionData | null>(null); // Define correct type
+    const [region, setRegion] = useState<RegionData | null>(null);
+    const [fullAddress, setFullAddress] = useState<string | null>(null); // Stores full address for Google Maps
 
     useEffect(() => {
         const fetchDataAddress = async () => {
@@ -132,6 +133,7 @@ const App = () => {
                 if (snapshot.exists()) {
                     const data = snapshot.val();
 
+                    // Extract AWB ID, Address, and City
                     const locationList: LocationData[] = Object.keys(data).map(awbID => ({
                         id: awbID,
                         Address: data[awbID].Address,
@@ -151,11 +153,13 @@ const App = () => {
         fetchDataAddress();
     }, []);
 
+    // Search AWB ID and get location
     const searchByAWB = async () => {
         const result = locations.find(loc => loc.id === scannedData);
         if (result) {
             console.log("Found Location:", result);
             setFoundLocation(result);
+            setFullAddress(`${result.Address}, ${result.City}`);
             await getCoordinates(result.Address, result.City);
         } else {
             console.log("AWB ID not found!");
@@ -163,7 +167,6 @@ const App = () => {
             setRegion(null);
         }
     };
-
     const getCoordinates = async (address: string, city: string) => {
         const query = encodeURIComponent(`${address}, ${city}`);
         const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${'AIzaSyBnOXyN8eHSbv-grb_rkKlLxT74oBntUHM'}`;
@@ -192,6 +195,13 @@ const App = () => {
         }
     };
 
+    const openGoogleMaps = () => {
+        if (fullAddress) {
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
+            Linking.openURL(url);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.mapContainer}>
@@ -212,7 +222,18 @@ const App = () => {
                         <Text>No Address Found for AWB ID: {scannedData}</Text>
                     )}
                     {region && (
-                            <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }} />
+                            <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
+                                <Callout onPress={openGoogleMaps}>
+                                    <View style={{ padding: 5 }}>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text>{foundLocation?.Address}, {foundLocation?.City}</Text>
+                                            <Text style={{ color: "blue", textDecorationLine: "underline" }}>
+                                                Navigate
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </Callout>
+                            </Marker>
                     )}
                 </MapView>
                 <View style={styles.focusButtonContainer}>
