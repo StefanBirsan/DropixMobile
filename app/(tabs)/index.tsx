@@ -7,7 +7,6 @@ import { useRouter } from 'expo-router';
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import BackgroundImage from '@/assets/images/Background1.png';
 
-
 type AuthScreenProps = {
     email: string;
     setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -102,7 +101,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }: AuthenticatedScreen
     );
 };
 
-export default function HomeScreen() {
+const HomeScreen = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [user, setUser] = useState<any>(null);
@@ -342,3 +341,4 @@ const styles = StyleSheet.create({
     },
 });
 
+export default HomeScreen;

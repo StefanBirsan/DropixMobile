@@ -25,7 +25,7 @@ export default function App() {
     const handleBarcodeScanned = ({ data }) => {
         if (!scanned) {
             // @ts-ignore
-            navigation.navigate('explore', {scannedData: data})
+            navigation.navigate('map', {scannedData: data})
         }
     };
 
@@ -48,7 +48,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+        flex: 1,
     },
     centered: {
         position: 'absolute',
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
         textShadowOffset: {width:1, height: 1},
         textShadowRadius: 3,
     },
-    })
+})

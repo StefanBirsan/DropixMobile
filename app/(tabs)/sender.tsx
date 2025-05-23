@@ -26,10 +26,10 @@ export default function MainScreen() {
         Alert.alert("AWB Created Successfully!");
         navigation.goBack();
         const data = {
-                Address: Address,
-                City: City,
-                Status: "Processing",
-                productName: productName,
+            Address: Address,
+            City: City,
+            Status: "Processing",
+            productName: productName,
         };
 
         const boxRef = ref(database, `BOX/${awb}`);
@@ -48,47 +48,47 @@ export default function MainScreen() {
     };
 
     return (
-            <View style={styles.Screen}>
-                <View style={styles.Header}>
-                    <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
-                        <Text style={styles.backText}>Back</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.Body}>
-                    <KeyboardAvoidingView behavior="padding" style={styles.SendForm}>
-                        <View style={styles.SendForm}>
-                            <View style={styles.Credentials}>
-                                <Text style={styles.leftText}>AWB</Text>
-                                <TextInput
-                                    style={styles.LabelField}
-                                    editable={false}
-                                    value={awb}
-                                    autoCapitalize="none"
-                                />
-                                <Text style={styles.leftText}>Address</Text>
-                                <TextInput
-                                    style={styles.LabelField}
-                                    value={Address}
-                                    autoCapitalize="none"
-                                    onChangeText={setAddress}
-                                />
-                                <Text style={styles.leftText}>City</Text>
-                                <TextInput
-                                    style={styles.LabelField}
-                                    value={City}
-                                    autoCapitalize="none"
-                                    onChangeText={setCity}
-                                />
-                                <Text style={styles.leftText}>Product</Text>
-                                <TextInput
-                                    style={styles.LabelField}
-                                    value={productName}
-                                    autoCapitalize="none"
-                                    onChangeText={setProductName}
-                                />
-                                <TouchableOpacity
-                                    disabled={isButtonDisabled}
-                                    style={{
+        <View style={styles.Screen}>
+            <View style={styles.Header}>
+                <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
+                    <Text style={styles.backText}>Back</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.Body}>
+                <KeyboardAvoidingView behavior="padding" style={styles.SendForm}>
+                    <View style={styles.SendForm}>
+                        <View style={styles.Credentials}>
+                            <Text style={styles.leftText}>AWB</Text>
+                            <TextInput
+                                style={styles.LabelField}
+                                editable={false}
+                                value={awb}
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.leftText}>Address</Text>
+                            <TextInput
+                                style={styles.LabelField}
+                                value={Address}
+                                autoCapitalize="none"
+                                onChangeText={setAddress}
+                            />
+                            <Text style={styles.leftText}>City</Text>
+                            <TextInput
+                                style={styles.LabelField}
+                                value={City}
+                                autoCapitalize="none"
+                                onChangeText={setCity}
+                            />
+                            <Text style={styles.leftText}>Product</Text>
+                            <TextInput
+                                style={styles.LabelField}
+                                value={productName}
+                                autoCapitalize="none"
+                                onChangeText={setProductName}
+                            />
+                            <TouchableOpacity
+                                disabled={isButtonDisabled}
+                                style={{
                                     backgroundColor: isButtonDisabled ? "grey" : '#E1EACD',
                                     borderColor: '#6256CA',
                                     marginTop: wp('20%'),
@@ -101,16 +101,16 @@ export default function MainScreen() {
                                     elevation: 5,
                                     width: wp('40%'),
                                 }} onPress={(sendToDatabase)}>
-                                    <Text style={styles.SendText}>Send</Text>
-                                </TouchableOpacity>
-                            </View>
+                                <Text style={styles.SendText}>Send</Text>
+                            </TouchableOpacity>
                         </View>
-                    </KeyboardAvoidingView>
+                    </View>
+                </KeyboardAvoidingView>
 
-                </View>
             </View>
-        )
-    }
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     Screen: {

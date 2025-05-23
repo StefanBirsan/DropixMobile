@@ -1,13 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Modal, Linking, Button} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Linking } from 'react-native';
 import MapView, {Callout, Marker, Region} from 'react-native-maps';
 import * as Location from 'expo-location';
 import AWBModal from "@/scripts/AWBModal";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import { getDatabase } from "@firebase/database";
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import { ref, database, get } from "@/scripts/firebase";
-import { GeocodingAPI} from "@/scripts/firebase";
+import { ref, get, getDatabase } from "@/scripts/firebase";
 
 type RootStackParamList = {
     final: { scannedData: string; };
@@ -32,7 +30,7 @@ interface RegionData {
     longitudeDelta: number;
 }
 
-const App = () => {
+const MapScreen = () => {
 
     const navigation = useNavigation();
 
@@ -227,18 +225,18 @@ const App = () => {
                         <Text>No Address Found for AWB ID: {scannedData}</Text>
                     )}
                     {region && (
-                            <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
-                                <Callout onPress={handleCalloutPress}>
-                                    <View>
-                                        <TouchableOpacity style={styles.calloutButton}>
-                                            <Text>{foundLocation?.Address}, {foundLocation?.City}</Text>
-                                            <Text style={{ color: "blue", textDecorationLine: "underline" }}>
-                                                Navigate
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </Callout>
-                            </Marker>
+                        <Marker coordinate={{ latitude: region.latitude, longitude: region.longitude }}>
+                            <Callout onPress={handleCalloutPress}>
+                                <View>
+                                    <TouchableOpacity style={styles.calloutButton}>
+                                        <Text>{foundLocation?.Address}, {foundLocation?.City}</Text>
+                                        <Text style={{ color: "blue", textDecorationLine: "underline" }}>
+                                            Navigate
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </Callout>
+                        </Marker>
                     )}
                 </MapView>
                 <View style={styles.focusButtonContainer}>
@@ -401,4 +399,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
+export default MapScreen;
