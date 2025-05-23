@@ -2,7 +2,7 @@ import {ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View} f
 import { useNavigation } from "@react-navigation/native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import React, { useEffect, useState } from "react";
-import { app, auth, getApp, getAuth, ref, database, set, push, get } from "@/scripts/firebase";
+import { ref, database, get } from "@/scripts/firebase";
 import BackgroundImage from "@/assets/images/Background1.png";
 
 export default function MainScreen() {
